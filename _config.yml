@@ -8,7 +8,7 @@
 # Site Settings
 locale                   : "en-US"
 title                    : "Computing Chemist"
-title_separator          : "-"
+title_separator          : "|"
 name                     : "Xiang Sun"
 description              : "A site with a minimalist style."
 url                      : "https://tsiangsun.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
@@ -111,6 +111,7 @@ author:
 include:
   - .htaccess
   - _pages
+  - _posts
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
@@ -172,7 +173,7 @@ sass:
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins
