@@ -19,7 +19,7 @@ double matrix[row][col];
 
 ```c++
 int row=5;
-double (*matrix)[COL] = new double[row][COL];
+double (*matrix)[col] = new double[row][col];
 ```
 
 
@@ -79,7 +79,38 @@ If you want to initialize it then use :
 vector<vector<double>> matrix(row,vector<double>(col,0));
 ```
 
+#### Example: define 2D complex matrix using STL 
+```c++
+#include <vector>
+#include <complex>
+using namespace std;
+const int N = 2;
 
-For dynamically allocated array in class, see http://www.cs.fsu.edu/~jestes/cop3330/notes/dma.html
+typedef std::complex<double>  Complex;
+typedef std::vector<vector<Complex> > Complex_Matrix;
+
+int GenInitialCondition(Complex_Matrix &sigma);
+
+int main (int argc, char *argv[]) {
+	Complex_Matrix sigma(N,vector<Complex>(N,0.0)); //initialize to be 0
+	//to get the value of real or imaginary parts:
+	double re, im;
+	re = sigma[0][0].real() + sigma[1][1].real();
+	im = sigma[0][0].imag() + sigma[1][1].imag();
+	return 0;
+}
+
+int GenInitialCondition(Complex_Matrix &sigma) {
+    for (int i = 0 ; i < N ; i++)
+        for (int j = 0 ; j < N ; j++)
+            sigma[i][j] = 0;
+    //to assign real or imaginary part use
+    sigma[0][0].real(5.0);
+    sigma[0][0].imag(1.0);    
+    return 0;
+}
+```
+
+For dynamically allocated array in C++ class, see [http://www.cs.fsu.edu/~jestes/cop3330/notes/dma.html](http://www.cs.fsu.edu/~jestes/cop3330/notes/dma.html)
 
 
