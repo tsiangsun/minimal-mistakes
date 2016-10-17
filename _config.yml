@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Computing Chemist"
+title                    : "Chemistry in Computers"
 title_separator          : "|"
 name                     : "Xiang Sun"
 description              : "A site with a minimalist style."
@@ -82,27 +82,27 @@ author:
   bio              : "I am a theoretical chemist."
   location         : "Ann Arbor, Michigan"
   email            : "tsiangsun@gmail.com"
-  uri              :
+  uri              : "http://tsiangsun.github.io/"
   bitbucket        :
   codepen          :
   dribbble         :
   flickr           :
-  facebook         :
+  facebook         : "tsiangsun"
   foursquare       :
-  github           :
+  github           : "tsiangsun"
   google_plus      :
   keybase          :
   instagram        :
   lastfm           :
-  linkedin         :
+  linkedin         : "xiangsun"
   pinterest        :
   soundcloud       :
   stackoverflow    : # "123456/username" (the last part of your profile url, e.g. http://stackoverflow.com/users/123456/username)
   steam            :
   tumblr           :
-  twitter          :
+  twitter          : "tsiangsun"
   vine             :
-  weibo            :
+  weibo            : "tsiangsun"
   xing             :
   youtube          :
 
