@@ -8,7 +8,7 @@
 # Site Settings
 locale                   : "en-US"
 title                    : "Chemistry in Computers"
-title_separator          : "|"
+title_separator          : "-"
 name                     : "Xiang Sun"
 description              : "A site with a minimalist style."
 url                      : "https://tsiangsun.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
