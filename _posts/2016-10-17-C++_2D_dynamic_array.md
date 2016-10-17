@@ -79,7 +79,7 @@ If you want to initialize it then use :
 vector<vector<double>> matrix(row,vector<double>(col,0));
 ```
 
-#### Example: define 2D complex matrix using STL 
+#### Example: 2D Complex matrix using STL 
 ```c++
 #include <vector>
 #include <complex>
@@ -93,7 +93,7 @@ int GenInitialCondition(Complex_Matrix &sigma);
 
 int main (int argc, char *argv[]) {
 	Complex_Matrix sigma(N,vector<Complex>(N,0.0)); //initialize to be 0
-	//to get the value of real or imaginary parts:
+	//to get the values of real or imaginary part:
 	double re, im;
 	re = sigma[0][0].real() + sigma[1][1].real();
 	im = sigma[0][0].imag() + sigma[1][1].imag();
@@ -104,7 +104,7 @@ int GenInitialCondition(Complex_Matrix &sigma) {
     for (int i = 0 ; i < N ; i++)
         for (int j = 0 ; j < N ; j++)
             sigma[i][j] = 0;
-    //to assign real or imaginary part use
+    //to assign real or imaginary part:
     sigma[0][0].real(5.0);
     sigma[0][0].imag(1.0);    
     return 0;
