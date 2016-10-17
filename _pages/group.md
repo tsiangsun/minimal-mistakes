@@ -1,8 +1,8 @@
 ---
 title: "Group"
 layout: single
-#excerpt: "CV"
 sitemap: true
+permalink: /group/
 ---
 
 

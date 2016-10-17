@@ -8,9 +8,8 @@ main:
   - title: "Group"
     url: /group/
 
-  - title: "Posts"
-    url: /posts/
+  - title: "Categories"
+    url: /categories/
 
-  - title: "Wiki"
-    url: /wiki/
-
+  - title: "Tags"
+    url: /tags/

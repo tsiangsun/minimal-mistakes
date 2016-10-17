@@ -1,8 +1,8 @@
 ---
 title: "Research"
 layout: single
-#excerpt: "CV"
 sitemap: true
+permalink: /research/
 ---
 
 
