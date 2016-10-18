@@ -2,10 +2,10 @@
 title: "How to extract energies from Amber output"
 layout: single
 comments: ture 
-tags: Amber, MD, 
+tags: Amber MD software
 categories: programming 
 ---
-## Extract energies from the original Amber output file  
+### Extract energies from the original Amber output file  
 
 The original Amber output file original\_traj.out (using **imin=0**) has the following formatted energy information:
 
@@ -17,13 +17,13 @@ The original Amber output file original\_traj.out (using **imin=0**) has the fol
  EELEC  =     10380.2083  EHBOND  =         0.0000  RESTRAINT  =         0.0000
  Ewald error estimate:   0.3266E-03
 ```
-To retrieve EPtot information, use the following Linux command  
+To retrieve total potential energy EPtot, use the following Linux command  
  
 ```bash
-$ grep "EPtot" original_traj.out | awk '{print $9}' > output_potential_energy.dat
+$ grep "EPtot" original_traj.out | awk '{print $9}' > output.dat
 ```
 
-## Extract energies from the recalculated Amber output file 
+### Extract energies from the recalculated Amber output file 
 
 The recalculated output file with input of _-y mdcrd_ (using **imin=5**) recalculated_traj.dat that has the following formatted energy information:
 
@@ -39,8 +39,11 @@ minimizing coord set #    33
 
   Maximum number of minimization cycles reached.
 ```
-One can use the following awk script called *get-energies.awk* to grep and sum up all the contributions to the total potential energy by   
-`$ awk -f get-energies.awk recalculated_traj.dat > output_potential_energy.dat`
+However, total potential energy is not precise (4.4956E+04), instead one can use the following awk script called *get-energies.awk* to grep and sum up all the contributions to the total potential energy by   
+
+```bash
+$ awk -f get-energies.awk recalculated_traj.dat > output.dat
+```
 
 The awk script *get-energies.awk* is as follows:  
 
