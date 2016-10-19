@@ -291,9 +291,13 @@ Uploads local branch commits to remote repo
 $ git push [remote_repo]  [branch]
 ```
 
-Download remote bookmark history and incorporates changes ~ git fetch + git merge (not highly recommended), use `$ git pull [remote_repo]  [branch]`
+Download remote bookmark history and incorporates changes ~ git fetch + git merge (not highly recommended)
 
-> When you use pull, Git tries to automatically do your work for you. It is context sensitive, so >Git will merge any pulled commits into the branch you are currently working in. pull automatically merges the commits without letting you review them first. If you don’t closely manage your branches, you may run into frequent conflicts.
+```bash
+$ git pull [remote_repo]  [branch]  
+```
+
+> When you use pull, Git tries to automatically do your work for you. It is context sensitive, so Git will merge any pulled commits into the branch you are currently working in. pull automatically merges the commits without letting you review them first. If you don’t closely manage your branches, you may run into frequent conflicts.
 
 > When you fetch, Git gathers any commits from the target branch that do not exist in your current branch and stores them in your local repository. However, it does not merge them with your current branch. This is particularly useful if you need to keep your repository up to date, but are working on something that might break if you update your files. To integrate the commits into your master branch, you use merge.
 
