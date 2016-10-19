@@ -6,8 +6,11 @@ main:
   - title: "Research"
     url: /research/
 
-  - title: "Group"
-    url: /group/
+#- title: "Group"
+#    url: /group/
+
+  - title: "Teach"
+    url: /teach/
 
   - title: "Categories"
     url: /categories/
