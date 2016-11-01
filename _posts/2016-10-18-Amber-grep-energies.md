@@ -2,7 +2,7 @@
 title: "How to extract energies from Amber output"
 layout: single
 comments: ture 
-tags: Amber MD software
+tags: Amber MD 
 categories: programming 
 ---
 ### Extract energies from the original Amber output file  
