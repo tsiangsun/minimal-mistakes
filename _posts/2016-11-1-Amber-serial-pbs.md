@@ -1,5 +1,5 @@
 ---
-title: "How to submit consecutive Amber jobs"
+title: "Automatically submit consecutive Amber jobs"
 layout: single
 comments: ture 
 tags: Amber MD script
@@ -7,15 +7,7 @@ categories: programming
 ---
 
 
-Take the example of triad MD simulation on the PI state. First, all force filed files and job control file are located at `$HOME/triad/bent/`
-
-```bash
-triad_thf_CT1.prmtop  
-triad_thf_CT2.prmtop  
-triad_thf_GR.prmtop  
-triad_thf_PI.prmtop
-prd.in
-```
+Take the example of triad MD simulation on the PI state. The strategy is suitable for equilibration or production runs. 
 
 ###The follwing generic `sample-run.amber.pbs` scripts are located at `$HOME/sample/`:
 
@@ -54,8 +46,8 @@ mkdir $LOCAL_DIR
 cd $LOCAL_DIR
 
 # cp $HOME/triad/bent/$TRAJ_STATE/NVE$PREV_JOB_ID/*.prmtop .
-cp $HOME/triad/bent/${TRAJ_STATE}/NVE${PREV_JOB_ID}/triad_thf_${TRAJ_STATE}_${PREV_JOB_ID}.rst .
 # cp $HOME/triad/bent/${TRAJ_STATE}/prd.in .
+cp $HOME/triad/bent/${TRAJ_STATE}/NVE${PREV_JOB_ID}/triad_thf_${TRAJ_STATE}_${PREV_JOB_ID}.rst .
 
 if [ -s "$PBS_NODEFILE" ] ; then
     echo "Running on $PBS_NODEFILE"
@@ -74,17 +66,17 @@ cp $LOCAL_DIR/* .
 cp $HOME/triad/bent/*.prmtop .
 cp $HOME/triad/bent/$TRAJ_STATE/prd.in .
 
-### execute program
-# [1] outputing mdcrd trajectory
-# mpirun -np 12 sander.MPI -O -i prd.in -o triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.out -p triad_thf_${TRAJ_STATE}.prmtop -c triad_thf_${TRAJ_STATE}_${PREV_JOB_ID}.rst -r triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.rst -x triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.mdcrd -inf triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.mdinfo 
-
-# [2] not outputing mdcrd trajectory
-mpirun -np 12 sander.MPI -O -i prd.in -o triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.out -p triad_thf_${TRAJ_STATE}.prmtop -c triad_thf_${TRAJ_STATE}_${PREV_JOB_ID}.rst -r triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.rst  -inf triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.mdinfo
+### execute sander MD program
+# If output trajectory (ntwx!=0), add  -x triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.mdcrd
+mpirun -np 12 sander.MPI -O -i prd.in -o triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.out \
+       -p triad_thf_${TRAJ_STATE}.prmtop \
+       -c triad_thf_${TRAJ_STATE}_${PREV_JOB_ID}.rst \
+       -r triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.rst \
+       -inf triad_thf_${TRAJ_STATE}_${CURR_JOB_ID}.mdinfo
 
 ### copy all files back to original dir
 rm *.prmtop
 rm prd.in
-rm triad_thf_${TRAJ_STATE}_${PREV_JOB_ID}.rst
 cp -rf /scratch/eitan_fluxoe/xiangs/${PBS_JOBID}/* $LOCAL_DIR/
 
 echo Job $jobname finished on `date`
@@ -118,7 +110,7 @@ sed "s/MYTRAJSTATE/$state/g" $HOME/sample/sample-run.amber.pbs > $jobname-$state
 sed "/-W depend=afterok/d" -i $jobname-$state-$i.pbs  #delete job dependence of first job
 sed "s/MYTRAJSTATE/$state/g" -i $jobname-$state-$i.pbs
 sed "s/MYJOBINDEX/$i/g" -i $jobname-$state-$i.pbs
-previd=$min-1
+previd=`expr $min - 1`
 sed "s/MYPREVJOBID/$previd/g" -i $jobname-$state-$i.pbs
 sed "s/MYCURRJOBID/$i/g" -i $jobname-$state-$i.pbs
 chmod +x $jobname-$state-$i.pbs
@@ -132,7 +124,7 @@ do
     sed "s/PREV_PBS_JOB_ID/$JOBDEP/g" -i $jobname-$state-$i.pbs  #job dependence
     sed "s/MYTRAJSTATE/$state/g" -i $jobname-$state-$i.pbs
     sed "s/MYJOBINDEX/$i/g" -i $jobname-$state-$i.pbs
-    previd=$i-1
+    previd=`expr $i - 1`
     sed "s/MYPREVJOBID/$previd/g" -i $jobname-$state-$i.pbs
     sed "s/MYCURRJOBID/$i/g" -i $jobname-$state-$i.pbs
     chmod +x $jobname-$state-$i.pbs
@@ -150,7 +142,34 @@ exit
 ###Amber job control file `prd.in` located at `$HOME/triad/bent/PI/` is as follows.
 
 ```
-continue MD, read R and V
+Restart MD, read R and V, output no traj
+ &cntrl
+   imin = 0, 
+   ntx = 5, irest = 1,
+   ntb = 1, cut = 12,
+   ntpr = 1, ntwx = 0, 
+   ntwr = 1,
+   nstlim = 5000, 
+   dt = 0.001,
+   ntc = 2, ntf = 2, iwrap = 1,
+   ntt = 0, nscm = 1000,
+   ig = -1, vlimit = 10.0,
+   nmropt = 0,
+   igb = 0,
+   ipol = 0,
+ /
+ &ewald
+ skinnb = 2.0
+ /
+&end
+```
+
+
+The job control file `prd-traj.in` located at `$HOME/triad/bent/PI/` generates trajectory of configuration. (ntwx=1: every time step output configuration)
+
+
+```
+Restart MD, read R and V, output traj
  &cntrl
    imin = 0, 
    ntx = 5, irest = 1,
@@ -170,4 +189,16 @@ continue MD, read R and V
  skinnb = 2.0
  /
 &end
+```
+
+
+
+All force filed files are also located at `$HOME/triad/bent/`
+
+```bash
+triad_thf_CT1.prmtop  
+triad_thf_CT2.prmtop  
+triad_thf_GR.prmtop  
+triad_thf_PI.prmtop
+prd.in
 ```
