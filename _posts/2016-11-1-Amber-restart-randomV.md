@@ -1,8 +1,8 @@
 ---
-title: "Amber: restart job by reading configuration but randomizing initial velocities"
+title: "Amber: restart job with random initial velocities"
 layout: single
 comments: ture 
-tags: Amber MD script
+tags: Amber 
 categories: programming 
 ---
 
@@ -89,13 +89,10 @@ rm -rf /scratch/eitan_fluxoe/xiangs/${PBS_JOBID}
 
 echo "DONE"
 ```
+ 
+   
+### Amber job control file `prd-randomV.in` located at `$HOME/triad/bent/GR/` is as follows, where _ntx = 1, irest = 0_ labels restart a new trajecotry by reading in R but randomizing V.
 
-
-
-
-
-
-###Amber job control file `prd-randomV.in` located at `$HOME/triad/bent/GR/` is as follows, where _ntx = 1, irest = 0_ labels restart a new trajecotry by reading in R but randomizing V.
 
 ```
 continue MD, read R but random V
@@ -124,6 +121,7 @@ continue MD, read R but random V
 
 
 All force filed files are located at `$HOME/triad/bent/`
+
 
 ```bash
 triad_thf_CT1.prmtop  

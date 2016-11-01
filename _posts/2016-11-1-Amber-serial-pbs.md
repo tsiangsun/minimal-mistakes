@@ -1,15 +1,15 @@
 ---
-title: "Automatically submit consecutive Amber jobs"
+title: "Amber: automatically submit consecutive jobs"
 layout: single
 comments: ture 
-tags: Amber MD script
+tags: Amber 
 categories: programming 
 ---
 
 
-Take the example of triad MD simulation on the PI state. The strategy is suitable for equilibration or production runs. 
+Take the example of triad MD simulation on the PI state. The strategy is suitable for equilibration or production runs. All the runs are along the same single trajectory, since the initial configuration and velocities are read from the `.rst` file of previous run.
 
-###The follwing generic `sample-run.amber.pbs` scripts are located at `$HOME/sample/`:
+### The follwing generic `sample-run.amber.pbs` scripts are located at `$HOME/sample/`:
 
 ```bash
 #!/bin/bash
@@ -139,7 +139,7 @@ exit
 ```
 
 
-###Amber job control file `prd.in` located at `$HOME/triad/bent/PI/` is as follows.
+### Amber job control file `prd.in` located at `$HOME/triad/bent/PI/` is as follows.
 
 ```
 Restart MD, read R and V, output no traj
