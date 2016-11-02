@@ -10,8 +10,8 @@
 
 
 <center> <h2> XIANG SUN </h2> </center>
-<center> Department of Chemistry, University of Michigan </center> 
-<center> 930 N University Ave, Ann Arbor, MI 48109 </center> 
+<center> <p style="font-size:100%;"> Department of Chemistry, University of Michigan </p> </center> 
+<center> <p style="font-size:100%;"> 930 N University Ave, Ann Arbor, MI 48109 </p> </center> 
  
 ### Education  
 
@@ -57,7 +57,7 @@ Project: _Ab initio_ molecular dynamics simulation of the ionization dynamics of
 4. **Xiang Sun**, Eitan Geva, Nonequilibrium Fermi’s Golden Rule Charge Transfer Rates via theLinearized Semiclassical Method, J. Chem. Theory Comput. 12, 2926-2941 (2016).
 5. **Xiang Sun**, Eitan Geva, Exact vs. Asymptotic Spectral Densities in the Garg-Onuchic-AmbegaokarCharge Transfer Model and its Effect on Fermi's Golden Rule Rate Constants, J. Chem. Phys. 144,044106 (2016).
 6. **Xiang Sun**, Eitan Geva, Equilibrium Fermi’s Golden Rule Charge Transfer Rate Constants in theCondensed Phase: The Linearized Semiclassical Method vs. Classical Marcus Theory, J. Phys.Chem. A, 120, 2976-2990 (2016).
-7. **Xiang Sun**, Branka M. Ladanyi, Richard M. Stratt, Effects of electronic-state-dependent solutepolarizability: application to solute-pump/solvent-probe spectra, J. Phys. Chem. B 119, 9129-9139(2015), **(2014 American Chemical Society Editors’ Choice Article)**.
+7. **Xiang Sun**, Branka M. Ladanyi, Richard M. Stratt, Effects of electronic-state-dependent solutepolarizability: application to solute-pump/solvent-probe spectra, J. Phys. Chem. B 119, 9129-9139(2015), **(2014 American Chemical Society Editors’ Choice)**.
 8. **Xiang Sun**, Richard M. Stratt, How a solute-pump/solvent-probe spectroscopy can reveal structuraldynamics: Polarizability response spectra as a two-dimensional solvation spectroscopy, J. Chem.Phys. 139, 044506 (2013).
 9. **Xiang Sun**, Richard M. Stratt, The molecular underpinnings of a Solute-pump/solvent-probeSpectroscopy: The theory of polarizability response spectra and an application to preferentialsolvation, Phys. Chem. Chem. Phys. 14, 6320-6331 (2012).
 10. Shan-Xi Tian, **Xiang Sun**, Rui Cao, Jinlong Yang, Thermal stabilities of the microhydratedzwitterionic glycine: A kinetics and dynamics study, J. Phys. Chem. A 113, 480-483 (2009).
@@ -72,7 +72,7 @@ Project: _Ab initio_ molecular dynamics simulation of the ionization dynamics of
 
 ### Certifications
 * High-Impact Principles and Practices for STEM Education, Rackham School of Graduate Studiesand the Center for Research on Learning and Teaching (CRLT) at the University of Michigan, 2015.
-* High-Performance Computing Certificate I, Center for Computation and Visualization, BrownUniversity, 2012.
+* High-Performance Computing Certificate I, Center for Computation and Visualization, Brown University, 2012.
 
 ### Skills
 * High performance computing: C/C++ with MPI parallel computing, Python and Linux shell scripting.
@@ -80,7 +80,7 @@ Project: _Ab initio_ molecular dynamics simulation of the ionization dynamics of
 * Nonlinear spectroscopy: theory and simulation.
 * Quantum Dynamics: Ehrenfest, Surface hopping, Mixed quantum-classical Liouville, Linearized path integral.
 * Molecular Dynamics Simulation: C/C++ code, DL_POLY, Amber.
-* Electronic Structure Calculation: Gaussian09, Q-Chem.
+* Electronic Structure Calculation: Gaussian 09, Q-Chem.
 
 ### Professional Affiliations
 * American Chemical Society
