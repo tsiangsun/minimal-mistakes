@@ -10,8 +10,8 @@
 
 
 <center> <h2> XIANG SUN </h2> </center>
-<center> <p style="font-size:100%;"> Department of Chemistry, University of Michigan </p> </center> 
-<center> <p style="font-size:100%;"> 930 N University Ave, Ann Arbor, MI 48109 </p> </center> 
+<center> <body style="font-size:100%;"> Department of Chemistry, University of Michigan </body> </center> 
+<center> <body style="font-size:100%;"> 930 N University Ave, Ann Arbor, MI 48109 </body> </center> 
  
 ### Education  
 
