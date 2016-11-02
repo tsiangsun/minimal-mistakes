@@ -10,9 +10,9 @@
 
 
 <center> <h2> XIANG SUN </h2> </center>
-<center>  <font size="-1"> Department of Chemistry, University of Michigan   
-930 N University Ave, Ann Arbor, MI 48109   
-</font>  </center> 
+<center>   Department of Chemistry, University of Michigan   
+930 N University Ave, Ann Arbor, MI 48109 
+</center> 
  
 ### Education  
 
