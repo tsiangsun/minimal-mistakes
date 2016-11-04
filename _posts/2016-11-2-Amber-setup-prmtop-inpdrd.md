@@ -9,11 +9,9 @@ categories: programming
 ![Amber Flowchart](/images/amber.png)
 
 
-In this note, we discuss how to use LEAP to generate force field (**prmtop**) and initial coordinate (**inpcrd**) input files for Amber MD program sander. We will have to convert files to Amber-suited PDB/mol2 and frcmod files.
+In this note, we discuss how to use LEAP to generate force field (**prmtop**) and initial coordinate (**inpcrd**) input files for Amber MD program sander. We will have to convert files to Amber-suited PDB/mol2 and frcmod files. (Note: Leap commands are not case sensitive, like loadamberparams and loadAmberParams are all OK; but object variables are case sensitive, like WAT, wat, Wat are not the same thing.)
 
 TABLE 1. The information contained in different files.
-[comment]: <> (to align center or right, use ``|:-------------:|`` or ``|------:|``)
-
 
 |  Information  | PDB   |  mol2  | lib/prep | frcmod/dat | prmtop | inpcrd |
 | --------------|:------:| :-----:| :------:| :-----:| :------:| :-----:|
@@ -30,11 +28,12 @@ TABLE 1. The information contained in different files.
 Here, Y means yes, and D means will be discarded when converted to force field files.
 
 The general idea of converting files are outlines below.
-#### Standard residue (PDB + lib -> prmtop + inpcrd)
+
+### Standard residue (PDB + lib -> prmtop + inpcrd)
 
 For standard residue in protein and nucleic acids PDB files, LEAP has lib standard force field files, so leap will merge information in PDB and lib by matching residue name and atom name. Also, leap will merge information in lib and frcmod/dat by matching atom type. Then leap generates topology (prmtop) and coordinate (inpcrd) files.
 
-#### Non-standard ligands or molecules (PDB/mol2 + frcmod -> prmtop + inpcrd)
+### Non-standard ligands or molecules (PDB/mol2 + frcmod -> prmtop + inpcrd)
 
 For non-standard ligands or molecules, we need to create force field library files by ourselves.
 
@@ -79,14 +78,14 @@ $ antechamber -i xx.gout -fi gout -o xx.mol2 -fo mol2 -c resp -rn xx  (assign ch
 $ antechamber -i xx.ini.mol2 -fi mol2 -o xx.mol2 -fo mol2 -c bcc -rn xx
 ```
 
-### (3) Use _parmchk_ to convert .mol2 (only) into .frcmod format (customized force field)
+### (3) Use _parmchk_ to convert .mol2 (only) into .frcmod
 
 ```
 $ parmchk -i xx.mol2 -f mol2 -o xx.frcmod -a Y
 $ vmd xx.mol2  (view graphics of molecule)
 ```
 
-### (4) Use LEAP to construct system - prepare .inpcrd and .prmtop files
+### (4) Use LEAP to prepare .inpcrd and .prmtop files
 
 #### A. Load molecules: xx.frcmod (the force field file) and xx.mol2 (the molecular geometry file)
 copy both files to your leap folder, then
@@ -97,9 +96,13 @@ $ xleap
 ```
 
 other force fields options:
+
 > source leaprc.ff02pol
-/export/apps/Amber/12/dat/leap/parm/frcmod.ff02pol.r1  (polarizable force field) ff03.r1  
+
+/export/apps/Amber/12/dat/leap/parm/frcmod.ff02pol.r1  (polarizable force field) ff03.r1   
+
 > source leaprc.ff03.r1
+
 /export/apps/Amber/12/dat/leap/parm/frcmod.ff03  (the non-polarizable force field)
 
 
@@ -179,11 +182,13 @@ New Molecule ...  --> load xx.prmtop using format AMBER7 Parm , then load xx.inp
 
  * * *
 
-## Example: Preparation of the PCBM_DMA in Chrorobenzene solution
+## Example: Preparation of the PCBM\_DMA in Chrorobenzene solution
 
-Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (residue name: CBZ) as solvent. Three letter acronyms for residue name is preferred. We have PCBM_DMA_SINGLE.pdb CBZ_SINGLE.pdb data files.
+Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (residue name: CBZ) as solvent. Three letter acronyms for residue name is preferred. We have PCBM\_DMA\_SINGLE.pdb CBZ\_SINGLE.pdb data files.
 
-in CBZ_SINGLE.pdb
+### (1) Convert pdb to mol2 using antechamber
+
+in CBZ\_SINGLE.pdb
 
 ```
 ATOM      1  H   CBZ     1       0.364  -2.147   0.000  1.00  0.00
@@ -202,7 +207,7 @@ TER
 END
 ```
 
-in CBZ_SINGLE.mol2
+in CBZ\_SINGLE.mol2
 
 ```
 @<TRIPOS>MOLECULE
@@ -244,7 +249,7 @@ Current Charge
 
 
 
-### Packmol : the program to solvate the solute
+### (2) Packmol : the program to solvate the solute
 
 ```bash
 $ packmol < setup.packm.PCBM
@@ -280,21 +285,22 @@ structure CBZ_SINGLE.pdb
 end structure
 ```
 
-(1) Use VMD to check visualize the box. In representation, Resname PCB and Resname CBZ to change rendering. OR use Jmol.sh to see structure.
 
-(2) Make sure net charge = 0.000000000 using dipole_read.f
+(i) Use VMD to check visualize the box. In representation, Resname PCB and Resname CBZ to change rendering. OR use Jmol.sh to see structure.
 
-(3) Use Chimera UCSF to compare quantum .cube surface with the partial charges.
+(ii) Make sure net charge = 0.000000000 using dipole_read.f
 
-
-
+(iii) Use Chimera UCSF to compare quantum .cube surface with the partial charges.
 
 
 
 
 
 
-### LEAP to prmtop and inpcrd
+
+
+
+### (3) LEAP to prmtop and inpcrd
 
 ```
 $ tleap -s -f setup.amber.INIT
