@@ -8,6 +8,6 @@ categories: programming
 
 ## To generate .prmtop and .inpcrd input files for Amber MD program sander, follow the steps in below:
 
-Take the example of () PCBM_DMA as solute and cholorobenzene as solvent. We need
+Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (residue name: CBZ) as solvent. We need
 
 ### (1) Single molecular structure
