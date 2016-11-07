@@ -81,14 +81,14 @@ $ antechamber -i xx.gout -fi gout -o xx.mol2 -fo mol2 -c resp -rn xx  (assign ch
 $ antechamber -i xx.ini.mol2 -fi mol2 -o xx.mol2 -fo mol2 -c bcc -rn xx
 ```
 
-### (3) Use _parmchk_ to convert .mol2 (only) into .frcmod
+### (3) Use parmchk to convert mol2 (only) into frcmod
 
 ```
 $ parmchk -i xx.mol2 -f mol2 -o xx.frcmod -a Y
 $ vmd xx.mol2  (view graphics of molecule)
 ```
 
-### (4) Use LEAP to prepare .inpcrd and .prmtop files
+### (4) Use LEAP to prepare inpcrd and prmtop files
 
 #### A. Load molecules: xx.frcmod (the force field file) and xx.mol2 (the molecular geometry file)
 copy both files to your leap folder, then
@@ -194,7 +194,7 @@ Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (re
 For example, we use AM1-BCC empirical charge method, such that the missing charge information will be added to pdb file and form mol2 file.
 
 ```
-antechamber -i CBZ_SINGLE.pdb -fi pdb -o CBZ_SINGLE.mol2 -fo mol2 -c bcc -s 2
+$ antechamber -i CBZ_SINGLE.pdb -fi pdb -o CBZ_SINGLE.mol2 -fo mol2 -c bcc -s 2
 ```
 
 In CBZ\_SINGLE.pdb， "ATOM" is recode type, followed by atom serial number, name,  residue name, x, y, z, occupancy, temperature factor. It is important to note "TER" marks the end of the residue that is required in Amber. "END" marks the end of the file. "ATOM" and "HEATOM" (for non-standard groups) are both ok.
@@ -283,10 +283,10 @@ bcc
 ### (2) Convert mol2 to frcmod using _parmchk_
 
 ```
-parmchk -i CBZ.mol2 -f mol2 -o CBZ.frcmod
+$ parmchk -i CBZ.mol2 -f mol2 -o CBZ.frcmod
 ```
 
-The resulting CBZ.frcmod file contains all the missing fore field parameters. If antechamber can't empirically calculate a value or has no analogy it will either add a default value that it thinks is reasonable or alternatively insert a place holder (with zeros everywhere) and the comment "ATTN: needs revision". In this case you will have to manually change parameters in this frcmod file. The CBZ.frcmod shows that there were 1 missing improper dihedral parameters.
+The resulting CBZ.frcmod (**force field modification type**) file contains all the missing fore field parameters. If antechamber can't empirically calculate a value or has no analogy it will either add a default value that it thinks is reasonable or alternatively insert a place holder (with zeros everywhere) and the comment "**ATTN: needs revision**". In this case you will have to manually change parameters in this frcmod file. The CBZ.frcmod shows that there were 1 missing improper dihedral parameters.
 
 ```
 remark goes here
@@ -306,7 +306,7 @@ NONBON
 ```
 
 
-### (3) Packmol : the program to solvate the solute
+### (3) Packmol : the program to create the simulation box by solvating the solute
 
 ```bash
 $ packmol < setup.packm.PCBM
