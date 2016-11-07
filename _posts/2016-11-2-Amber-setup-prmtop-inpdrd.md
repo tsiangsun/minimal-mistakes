@@ -8,6 +8,7 @@ categories: programming
 
 ![Amber Flowchart](/images/amber.png)
 
+## I. Concepts
 
 In this note, we discuss how to use LEAP to generate force field (**prmtop**) and initial coordinate (**inpcrd**) input files for Amber MD program sander. We will have to convert files to Amber-suited PDB/mol2 and frcmod files. (Note: Leap commands are not case sensitive, like loadamberparams and loadAmberParams are all OK; but object variables are case sensitive, like WAT, wat, Wat are not the same thing.)
 
@@ -43,7 +44,9 @@ Second, we use _parmchk_ to construct new additional frcmod file for the non-sta
 
 Third, _leap_ will merge information in PDB and mol2/prep by matching residue name and atom name. Also, leap will merge information in mol2/prep, standard frcmod/dat, and the new additional frcmod by matching atom type. Finally, leap will generate prmtop and inpcrd files.
 
- * * *
+
+
+## II. General procedure
 
 ### (1) Single molecular structure
 
@@ -180,15 +183,21 @@ New Molecule ...  --> load xx.prmtop using format AMBER7 Parm , then load xx.inp
 
 
 
- * * *
 
-## Example: Preparation of the PCBM\_DMA in Chrorobenzene solution
+
+## III. Example: Preparation of the PCBM\_DMA in Chrorobenzene solution
 
 Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (residue name: CBZ) as solvent. Three letter acronyms for residue name is preferred. We have PCBM\_DMA\_SINGLE.pdb CBZ\_SINGLE.pdb data files.
 
-### (1) Convert pdb to mol2 using antechamber
+### (1) Convert pdb to mol2 using _antechamber_
 
-in CBZ\_SINGLE.pdb
+For example, we use AM1-BCC empirical charge method, such that the missing charge information will be added to pdb file and form mol2 file.
+
+```
+antechamber -i CBZ_SINGLE.pdb -fi pdb -o CBZ_SINGLE.mol2 -fo mol2 -c bcc -s 2
+```
+
+In CBZ\_SINGLE.pdb， "ATOM" is recode type, followed by atom serial number, name,  residue name, x, y, z, occupancy, temperature factor. It is important to note "TER" marks the end of the residue that is required in Amber. "END" marks the end of the file. "ATOM" and "HEATOM" (for non-standard groups) are both ok.
 
 ```
 ATOM      1  H   CBZ     1       0.364  -2.147   0.000  1.00  0.00
@@ -207,14 +216,38 @@ TER
 END
 ```
 
-in CBZ\_SINGLE.mol2
+PDB file record format:
+
+```
+COLUMNS        DATATYPE      FIELD        DEFINITION
+-------------------------------------------------------------------------------------
+ 1 -  6        Record name   "ATOM  "
+ 7 - 11        Integer       serial       Atom  serial number. (index=serial-1)
+13 - 16        Atom          name         Atom name. (usually start from column 14!)
+17             Character     altLoc       Alternate location indicator.
+18 - 20        Residue name  resName      Residue name.
+22             Character     chainID      Chain identifier.
+23 - 26        Integer       resSeq       Residue sequence number.
+27             AChar         iCode        Code for insertion of residues.
+31 - 38        Real(8.3)     x            Orthogonal coordinates for X in Angstroms.
+39 - 46        Real(8.3)     y            Orthogonal coordinates for Y in Angstroms.
+47 - 54        Real(8.3)     z            Orthogonal coordinates for Z in Angstroms.
+55 - 60        Real(6.2)     occupancy    Occupancy.
+61 - 66        Real(6.2)     tempFactor   Temperature  factor.
+77 - 78        LString(2)    element      Element symbol, right-justified.
+79 - 80        LString(2)    charge       Charge on the atom. (usually discarded)
+```
+
+
+The resulting CBZ\_SINGLE.mol2 contains the 3 dimensional structure of our CBZ molecule as well as the charge on each atom, final column, the atom number (column 1), its name (column 2) and it's atom type (column 6). It also specifies the bonding at the end of the file. This file does not, however, contain any parameters. The GAFF parameters are all defined in $AMBERHOME/dat/leap/parm/gaff.dat. The other thing you should notice here is that all of the GAFF atom types are in lower case. This is the mechanism by which the GAFF force field is kept independent of the macromolecular AMBER force fields. All of the traditional AMBER force fields use uppercase atom types. In this way the GAFF and traditional force fields can be mixed in the same calculation.
 
 ```
 @<TRIPOS>MOLECULE
 CBZ
    12    12     1     0     0
 SMALL
-Current Charge
+bcc
+
 
 @<TRIPOS>ATOM
       1 H           0.3640   -2.1470    0.0000 ha        1 CBZ      0.192810
@@ -247,15 +280,39 @@ Current Charge
 ```
 
 
+### (2) Convert mol2 to frcmod using _parmchk_
+
+```
+parmchk -i CBZ.mol2 -f mol2 -o CBZ.frcmod
+```
+
+The resulting CBZ.frcmod file contains all the missing fore field parameters. If antechamber can't empirically calculate a value or has no analogy it will either add a default value that it thinks is reasonable or alternatively insert a place holder (with zeros everywhere) and the comment "ATTN: needs revision". In this case you will have to manually change parameters in this frcmod file. The CBZ.frcmod shows that there were 1 missing improper dihedral parameters.
+
+```
+remark goes here
+MASS
+
+BOND
+
+ANGLE
+
+DIHE
+
+IMPROPER
+ca-ca-ca-ha         1.1          180.0         2.0          General improper torsional angle (2 general atom types)
+
+NONBON
+
+```
 
 
-### (2) Packmol : the program to solvate the solute
+### (3) Packmol : the program to solvate the solute
 
 ```bash
 $ packmol < setup.packm.PCBM
 ```
 
-The packmol script setup.packm.PCBM is a follows.
+The packmol script setup.packm.PCBM is as follows.
 
 ```
 # A mixture of PCBM and CBZ
@@ -290,7 +347,7 @@ end structure
 
 (ii) Make sure net charge = 0.000000000 using dipole_read.f
 
-(iii) Use Chimera UCSF to compare quantum .cube surface with the partial charges.
+(iii) Use UCSF Chimera to compare quantum .cube surface with the partial charges.
 
 
 
@@ -300,7 +357,7 @@ end structure
 
 
 
-### (3) LEAP to prmtop and inpcrd
+### (4) LEAP to prmtop and inpcrd
 
 ```
 $ tleap -s -f setup.amber.INIT
