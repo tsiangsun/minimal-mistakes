@@ -385,7 +385,7 @@ quit
 
 
 
-Second, use leap to construct prmtop and inpcrd from the input of the NEW PDB of the whole BULK system, the mol2 of each spicies, and the additional force field parameter frcmod files.
+Second, use leap to construct prmtop and inpcrd from the input of the NEW PDB of the whole BULK system, the mol2 of each spicies, and the additional force field parameter frcmod files. We run the following leap script or via xleap:
 
 
 
