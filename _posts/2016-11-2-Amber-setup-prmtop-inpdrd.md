@@ -359,6 +359,8 @@ end structure
 
 ### (4) LEAP to prmtop and inpcrd
 
+First, use leap to correct the BULK system PDB file into Amber acceptable PDB format. One of the difference is the new PDB file has "TER" after every molecule/residue.
+
 ```
 $ tleap -s -f setup.amber.INIT
 ```
@@ -383,7 +385,7 @@ quit
 
 
 
-
+Second, use leap to construct prmtop and inpcrd from the input of the NEW PDB of the whole BULK system, the mol2 of each spicies, and the additional force field parameter frcmod files.
 
 
 
