@@ -187,14 +187,14 @@ New Molecule ...  --> load xx.prmtop using format AMBER7 Parm , then load xx.inp
 
 ## III. Example: Preparation of the PCBM\_DMA in Chrorobenzene solution
 
-Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (residue name: CBZ) as solvent. Three letter acronyms for residue name is preferred. We have PCBM\_DMA\_SINGLE.pdb CBZ\_SINGLE.pdb data files.
+Take the example of PCBM_DMA (residue name: PCB) as solute and Chlorobenzene (residue name: CBZ) as solvent. Three letter acronyms for residue name is preferred. We have PCBM\_DMA.pdb CBZ.pdb data files.
 
 ### (1) Convert pdb to mol2 using _antechamber_
 
 For example, we use AM1-BCC empirical charge method, such that the missing charge information will be added to pdb file and form mol2 file.
 
 ```
-$ antechamber -i CBZ_SINGLE.pdb -fi pdb -o CBZ_SINGLE.mol2 -fo mol2 -c bcc -s 2
+$ antechamber -i CBZ.pdb -fi pdb -o CBZ.mol2 -fo mol2 -c bcc -s 2
 ```
 
 In CBZ\_SINGLE.pdb， "ATOM" is recode type, followed by atom serial number, name,  residue name, x, y, z, occupancy, temperature factor. It is important to note "TER" marks the end of the residue that is required in Amber. "END" marks the end of the file. "ATOM" and "HEATOM" (for non-standard groups) are both ok.
@@ -239,7 +239,8 @@ COLUMNS        DATATYPE      FIELD        DEFINITION
 ```
 
 
-The resulting CBZ\_SINGLE.mol2 contains the 3 dimensional structure of our CBZ molecule as well as the charge on each atom, final column, the atom number (column 1), its name (column 2) and it's atom type (column 6). It also specifies the bonding at the end of the file. This file does not, however, contain any parameters. The GAFF parameters are all defined in $AMBERHOME/dat/leap/parm/gaff.dat. The other thing you should notice here is that all of the GAFF atom types are in lower case. This is the mechanism by which the GAFF force field is kept independent of the macromolecular AMBER force fields. All of the traditional AMBER force fields use uppercase atom types. In this way the GAFF and traditional force fields can be mixed in the same calculation.
+The resulting CBZ.mol2 contains the 3 dimensional structure of our CBZ molecule as well as the charge on each atom, final column, the atom number (column 1), its name (column 2) and it's atom type (column 6). It also specifies the bonding at the end of the file. This file does not, however, contain any parameters. The GAFF parameters are all defined in $AMBERHOME/dat/leap/parm/gaff.dat. The other thing you should notice here is that all of the GAFF atom types are in lower case. This is the mechanism by which the GAFF force field is kept independent of the macromolecular AMBER force fields. All of the traditional AMBER force fields use uppercase atom types. In this way the GAFF and traditional force fields can be mixed in the same calculation.
+
 
 ```
 @<TRIPOS>MOLECULE
@@ -278,7 +279,7 @@ bcc
 @<TRIPOS>SUBSTRUCTURE
      1 CBZ         1 TEMP              0 ****  ****    0 ROOT
 ```
-
+Do the same to the solute, and obtain PCBM\_DMA.mol2 file.
 
 ### (2) Convert mol2 to frcmod using _parmchk_
 
@@ -304,6 +305,8 @@ ca-ca-ca-ha         1.1          180.0         2.0          General improper tor
 NONBON
 
 ```
+
+Do the same to the solute, and obtain PCBM\_DMA.frcmod file.
 
 
 ### (3) Packmol : the program to create the simulation box by solvating the solute
@@ -331,12 +334,12 @@ output PCBM_CBZ_BULK.pdb
 # coordinates 90. 90. 90. That is, they will be put in a cube of side
 # 40. (the keyword "inside cube 0. 0. 0. 90.") could be used as well.
 
-structure PCBM_DMA_SINGLE.pdb
+structure PCBM_DMA.pdb
   number 1
   inside box 35. 35. 35. 55. 55. 55.
 end structure
 
-structure CBZ_SINGLE.pdb
+structure CBZ.pdb
   number 6000
   inside box 0. 0. 0. 90. 90. 90.
 end structure
@@ -359,7 +362,7 @@ end structure
 
 ### (4) LEAP to prmtop and inpcrd
 
-First, use leap to correct the BULK system PDB file into Amber acceptable PDB format. One of the difference is the new PDB file has "TER" after every molecule/residue.
+A. First, use leap to correct the BULK system PDB file into Amber acceptable PDB format. One of the difference is the new PDB file has "TER" after every molecule/residue.
 
 ```
 $ tleap -s -f setup.amber.INIT
@@ -370,11 +373,11 @@ setup.amber.INIT
 ```
 source leaprc.gaff
 
-CBZ = loadmol2      CBZ_SINGLE.mol2
-loadamberparams     CBZ_SINGLE.frcmod
+CBZ = loadmol2      CBZ.mol2
+loadamberparams     CBZ.frcmod
 
-PCB = loadmol2      PCBM_DMA_SINGLE.mol2
-loadamberparams     PCBM_DMA_SINGLE.frcmod
+PCB = loadmol2      PCBM_DMA.mol2
+loadamberparams     PCBM_DMA.frcmod
 
 BULK = loadpdb      PCBM_CBZ_BULK.pdb
 
@@ -385,7 +388,7 @@ quit
 
 
 
-Second, use leap to construct prmtop and inpcrd from the input of the NEW PDB of the whole BULK system, the mol2 of each spicies, and the additional force field parameter frcmod files. We run the following leap script or via xleap:
+B. Second, use leap to construct prmtop and inpcrd from the input of the NEW PDB of the whole BULK system, the mol2 of each spicies, and the additional force field parameter frcmod files. We run the following leap script or via xleap:
 
 
 
@@ -398,11 +401,11 @@ setup.amber.BULK
 ```
 source leaprc.gaff
 
-CBZ = loadmol2      CBZ_SINGLE.mol2
-loadamberparams     CBZ_SINGLE.frcmod
+CBZ = loadmol2      CBZ.mol2
+loadamberparams     CBZ.frcmod
 
-PCB = loadmol2      PCBM_DMA_SINGLE.mol2
-loadamberparams     PCBM_DMA_SINGLE.frcmod
+PCB = loadmol2      PCBM_DMA.mol2
+loadamberparams     PCBM_DMA.frcmod
 
 BULK = loadpdb      PCBM_CBZ_BULK_NEW.pdb
 
