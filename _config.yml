@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Chemistry in Computers"
+title                    : "Xiang's Code"
 title_separator          : "-"
 name                     : "Xiang Sun"
-description              : "A site with a minimalist style."
+description              : "A tech blog with a minimalist style."
 url                      : "https://tsiangsun.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -79,8 +79,8 @@ analytics:
 author:
   name             : "Xiang Sun"
   avatar           : "bio-photo.jpg"
-  bio              : "a theoretical chemist"
-  location         : "Ann Arbor, Michigan"
+  bio              : "Data Scientist"
+  location         : "San Diego, CA"
   email            : "tsiangsun@gmail.com"
   uri              : "http://tsiangsun.github.io/"
   bitbucket        :
