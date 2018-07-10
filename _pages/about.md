@@ -15,11 +15,6 @@ Professor Sun is interested in developing theoretical and computational methods 
  
 Theoretical Chemistry, Quantum Dynamics, Statistical Mechanics, Ultrafast Spectroscopy
  
-### Education
- 
-* Ph.D. in chemistry, Brown University, 2014
-* M.A. in chemistry, Brown University, 2010
-* B.S. in chemical physics, University of Science and Technology of China, 2008
  
 ### Selected Publications
  
