@@ -1,5 +1,5 @@
 ---
- title: "about me"
+ title: "About"
  layout: single 
  sitemap: true 
  permalink: /about/  
