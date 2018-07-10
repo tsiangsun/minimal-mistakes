@@ -1,5 +1,5 @@
 ---
- title: "About"
+ title: "About Xiang Sun"
  layout: single 
  sitemap: true 
  permalink: /about/  
