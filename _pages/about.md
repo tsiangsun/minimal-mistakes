@@ -21,7 +21,7 @@ Theoretical Chemistry, Quantum Dynamics, Statistical Mechanics, Ultrafast Spectr
 * M.A. in chemistry, Brown University, 2010
 * B.S. in chemical physics, University of Science and Technology of China, 2008
  
- ### Selected Publications
+### Selected Publications
  
 * Xiang Sun, Pengzhi Zhang, Yifan Lai, Kyle L. Williams, Margaret S. Cheung, Barry D. Dunitz, Eitan Geva, Computational Study of Charge Transfer Dynamics in the Carotenoid-Porphyrin-C60 Molecular Triad Dissolved in Tetrahydrofuran and its Spectroscopic Signature, J. Phys. Chem. C 122, 11288-11299 (2018).
 * Alexei A. Kananenka, Xiang Sun, Alexander Schubert, Barry D. Dunietz and Eitan Geva, A comparative study of different methods for calculating electronic transition rates, J. Chem. Phys. 148, 102304 (2018).
